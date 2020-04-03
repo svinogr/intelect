@@ -53,6 +53,14 @@ public class User implements UserDetails {
         return name;
     }
 
+    public boolean isAdmin() {
+        return roles.contains(Role.ADMIN);
+    }
+
+    public String getFio() {
+        return surname.substring(0,1).toUpperCase() + surname.substring(1) + " " + name.substring(0,1).toUpperCase() + ". " + patronymic.substring(0,1).toUpperCase() +".";
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -111,5 +119,19 @@ public class User implements UserDetails {
 
     public void setRoles(Set<Role> roles) {
         this.roles = roles;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", username='" + username + '\'' +
+                ", surname='" + surname + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", active=" + active +
+                ", password='" + password + '\'' +
+                ", roles=" + roles +
+                '}';
     }
 }
