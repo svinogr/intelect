@@ -21,4 +21,9 @@ public class AutoNumberService {
     public void deleteNumber(AutoNumber autoNumber) {
         autoNumberRepo.delete(autoNumber);
     }
+
+    public Iterable<AutoNumber> filter(String filter) {
+        filter.trim();
+        return autoNumberRepo.findByNumberContainingOrDescriptionContaining(filter, filter);
+    }
 }

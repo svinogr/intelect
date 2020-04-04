@@ -20,15 +20,24 @@ public class AutoNumberCtrl {
     private AutoNumberService autoNumberService;
 
     @GetMapping()
-    public String allNumbers(Model model) {
-        Iterable<AutoNumber> allNumbers = autoNumberService.findAllNumbers();
-        model.addAttribute("numbers", allNumbers);
+    public String allNumbers(@RequestParam(required = false) String filter,  Model model) {
+       // Iterable<AutoNumber> allNumbers = autoNumberService.findAllNumbers();
+        setFilterToModel(filter, model);
+       // model.addAttribute("numbers", allNumbers);
+
+        return "numbers";
+    }
+
+    @PostMapping("/{filter}")
+    public  String filter(@RequestParam String filter, Model model) {
+        setFilterToModel(filter, model);
 
         return "numbers";
     }
 
     @PostMapping()
     public String saveNumber(
+            @RequestParam(required = false) String filter,
             @RequestParam String number,
             @RequestParam String description,
             @RequestParam("numberId") AutoNumber autoNumber,
@@ -38,18 +47,27 @@ public class AutoNumberCtrl {
             autoNumber.setId((long) 0);
         }
 
+        System.out.println(filter);
+
         autoNumber.setNumber(number);
         autoNumber.setDescription(description);
 
         autoNumberService.addNumber(autoNumber);
 
-        return "redirect:/numbers";
+        setFilterToModel(filter, model);
+
+        return "numbers";
     }
 
-    @GetMapping("{autoNumber}")
-    public String getNumber(@PathVariable AutoNumber autoNumber, Model model) {
+    @PostMapping("/edit/{autoNumber}")
+    public String getNumber(
+            @RequestParam(required = false) String filter,
+            @PathVariable AutoNumber autoNumber,
+            Model model) {
+        System.out.println("filter in edit " +filter);
         System.out.println(autoNumber.toString());
         model.addAttribute("number", autoNumber);
+        setFilterToModel(filter, model);
 
         return "numberedit";
     }
@@ -66,12 +84,26 @@ public class AutoNumberCtrl {
         return "numberedit";
     }
 
-    @GetMapping("/delete/{autoNumber}")
-    public String deleteNumber(@PathVariable AutoNumber autoNumber, Model model) {
+    @PostMapping("/delete/{autoNumber}")
+    public String deleteNumber(
+            @RequestParam(required = false) String filter,
+            @PathVariable AutoNumber autoNumber,
+            Model model) {
+
         if (autoNumber != null){
             autoNumberService.deleteNumber(autoNumber);
         }
 
-        return "redirect:/numbers";
+        setFilterToModel(filter, model);
+
+        return "numbers";
+    }
+
+    private void setFilterToModel(@RequestParam(required = false) String filter, Model model) {
+        System.out.println("filter " + filter );
+        if (filter != null) {
+            model.addAttribute("numbers", autoNumberService.filter(filter));
+            model.addAttribute("filter", filter);
+        } else model.addAttribute("numbers", autoNumberService.findAllNumbers());
     }
 }

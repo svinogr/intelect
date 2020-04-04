@@ -11,6 +11,7 @@
                         <label>Описание</label>
                         <input class="form-control" type="text" name="description" value="${number.description}"/>
                     </div>
+                    <input type="hidden" class="form-control"  value="<#if filter??>${filter}</#if>" name="filter"/>
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
                     <input type="hidden" name="numberId" value="${number.id}">
                 </div>
