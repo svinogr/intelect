@@ -4,13 +4,18 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.NotBlank;
 
 @Entity(name = "autonumber")
 public class AutoNumber {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @NotBlank(message = "поле не должно быть пустым")
     private String number;
+
+    @NotBlank(message = "поле не должно быть пустым")
     private String description;
 
     public AutoNumber() {

@@ -61,7 +61,6 @@ public class UserCtrl {
             @RequestParam Map<String, String> form,
             @RequestParam("userId") User user
     ) {
-        System.out.println("dddd");
         Set<String> setRoles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toSet());
 
         user.getRoles().clear();

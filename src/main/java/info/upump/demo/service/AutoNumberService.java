@@ -23,7 +23,7 @@ public class AutoNumberService {
     }
 
     public Iterable<AutoNumber> filter(String filter) {
-        filter.trim();
-        return autoNumberRepo.findByNumberContainingOrDescriptionContaining(filter, filter);
+        String trim = filter.trim();
+        return autoNumberRepo.findByNumberContainingOrDescriptionContaining(trim, trim);
     }
 }

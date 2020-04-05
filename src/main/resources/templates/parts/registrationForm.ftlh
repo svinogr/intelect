@@ -6,7 +6,11 @@
                     <div class="row">
                         <div class="form-group mr-1">
                             <label>Имя</label>
-                            <input class="form-control" type="text" name="name" value="${user.name}">
+                            <input class="form-control <#if nameError??>is-invalid</#if>" type="text" name="name"
+                                   value="${user.name}">
+                            <#if nameError??>
+                                <div class="invalid-feedback">Example invalid feedback text</div>
+                            </#if>
                         </div>
                         <div class="form-group mr-1 ml-1">
                             <label>Отчество</label>
@@ -31,17 +35,27 @@
                         </div>
                         <div class="form-group  ml-1">
                             <label>Пароль</label>
-                            <input class="form-control" type="password" name="password2">
+                            <input class="form-control" type="password" name="password2" value="${user.password2}">
                         </div>
                     </div>
                 </div>
-                <#list roles as role>
-                    <div>
-                        <label><input class="mr-1" type="checkbox"
-                                      name="${role}" ${user.roles?seq_contains(role)?string("checked", "")}>${role}
-                        </label>
-                    </div>
-                </#list>
+
+                <div>
+                    <label><input class="mr-1" disabled type="checkbox"
+                                  name="USER" checked>USER
+                    </label>
+                </div>
+                <div>
+                    <label><input class="mr-1" type="checkbox"
+                                  name="ADMIN" <#if roles.ADMIN??>
+                            <#if roles.ADMIN = "checked"> checked
+                            </#if>
+
+
+                        </#if>>ADMIN
+                    </label>
+                </div>
+
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                 <input type="hidden" name="userId" value="${user.id}">
                 <button class="btn btn-outline-primary form-control mt-4" type="submit">Сохранить</button>
