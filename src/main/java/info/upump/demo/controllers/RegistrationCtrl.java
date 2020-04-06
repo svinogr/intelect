@@ -8,6 +8,7 @@ import org.springframework.boot.context.properties.bind.BindResult;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -54,11 +55,16 @@ private UserService userService;
                              BindingResult bindingResult,
                              Model model,
         @RequestParam Map<String, String> form) {
+        Map<String, String> errors = ControlerUtils.getErrors(bindingResult);
+
+        if(user.getPassword() != null && !user.getPassword().equals(user.getPassword2())) {
+            errors.put("password2Error", "пароли не совпадают");
+            bindingResult.addError(new ObjectError("password2", ""));
+        }
 
         if (bindingResult.hasErrors()) {
-            Map<String, String> errors = ControlerUtils.getErrors(bindingResult, model);
-            model.addAttribute("error", errors);
 
+            model.addAttribute("error", errors);
 
             Map<String, String> roles = Arrays.stream(Role.values()).map(Role::name).collect(Collectors.toMap(
                     role -> role, role -> ""

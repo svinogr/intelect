@@ -26,7 +26,6 @@ public class User implements UserDetails {
     @NotBlank(message = "поле не должно быть пустым")
     private String password;
     @Transient
-    @NotBlank(message = "поле не должно быть пустым")
     private String password2;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)

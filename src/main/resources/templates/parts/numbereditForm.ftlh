@@ -5,11 +5,17 @@
                 <div class="container">
                     <div class="row form-group">
                         <label>Номер</label>
-                        <input class="form-control" type="text" name="number" value="${number.number}">
+                        <input class="form-control <#if (error.numberError)??>is-invalid</#if>" type="text" name="number" value="${number.number}">
+                        <#if (error.numberError)??>
+                            <div class="invalid-feedback col">${error.numberError}</div>
+                        </#if>
                     </div>
                     <div class=" row form-group">
                         <label>Описание</label>
-                        <input class="form-control" type="text" name="description" value="${number.description}"/>
+                        <input class="form-control <#if (error.descriptionError)??>is-invalid</#if>" type="text" name="description" value="${number.description}"/>
+                        <#if (error.descriptionError)??>
+                            <div class="invalid-feedback col">${error.descriptionError}</div>
+                        </#if>
                     </div>
                     <input type="hidden" class="form-control"  value="<#if filter??>${filter}</#if>" name="filter"/>
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
