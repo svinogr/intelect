@@ -1,6 +1,7 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/uploadFrom.ftlh" as u>
 <#import "parts/modal.ftlh" as m>
+<#import "parts/pager.ftlh" as p>
 <@c.page>
     <@u.upload/>
     <div class="mt-5">
@@ -15,6 +16,8 @@
             </div>
         </form>
 
+        <@p.pager "" page />
+
         <table class="table table-sm table-borderless">
             <thead class="thead-dark">
             <tr>
@@ -24,7 +27,7 @@
             </tr>
             </thead>
             <tbody>
-            <#list numbers as number>
+            <#list page.content as number>
             <tr>
                 <th scope="row">
                     ${number.number}</th>

@@ -3,6 +3,9 @@ package info.upump.demo.controllers;
 import info.upump.demo.model.AutoNumber;
 import info.upump.demo.service.AutoNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -25,22 +28,24 @@ public class AutoNumberCtrl {
     private AutoNumberService autoNumberService;
 
     @GetMapping()
-    public String allNumbers(@RequestParam(required = false) String filter, Model model) {
+    public String allNumbers(@RequestParam(required = false) String filter, Model model,
+                             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         // Iterable<AutoNumber> allNumbers = autoNumberService.findAllNumbers();
         System.out.println(filter);
-        setFilterToModel(filter, model);
+        setFilterToModel(filter, model, pageable);
         // model.addAttribute("numbers", allNumbers);
 
         return "numbers";
     }
 
     @PostMapping("/{filter}")
-    public String filter(@RequestParam String filter, RedirectAttributes redirectAttributes, Model model) {
+    public String filter(@RequestParam String filter, RedirectAttributes redirectAttributes, Model model,
+                         @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         if (filter == null || filter.isEmpty()) {
             return "redirect:/numbers";
         }
 
-        setFilterToModel(filter, model);
+        setFilterToModel(filter, model, pageable);
 
         return "numbers";
     }
@@ -50,7 +55,8 @@ public class AutoNumberCtrl {
             @RequestParam(required = false) String filter,
             @Valid AutoNumber autoNumber,
             BindingResult bindingResult,
-            Model model) {
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         System.out.println(autoNumber.toString());
         System.out.println(filter);
@@ -71,7 +77,7 @@ public class AutoNumberCtrl {
             autoNumberService.addNumber(autoNumber);
         }
 
-        setFilterToModel(filter, model);
+        setFilterToModel(filter, model, pageable);
 
         return "numbers";
     }
@@ -84,7 +90,7 @@ public class AutoNumberCtrl {
         System.out.println("filter in edit " + filter);
         System.out.println(autoNumber.toString());
         model.addAttribute("number", autoNumber);
-        setFilterToModel(filter, model);
+        setFilterToModel(filter, model, null);
 
         return "numberedit";
     }
@@ -113,12 +119,12 @@ public class AutoNumberCtrl {
             autoNumberService.deleteNumber(autoNumber);
         }
 
-        setFilterToModel(filter, model);
+        setFilterToModel(filter, model, null);
 
         return "/numbers";
     }
 
-    private void setFilterToModel(String filter, Model model) {
+    private void setFilterToModel(String filter, Model model, Pageable pageable) {
         System.out.println("filter1 " + filter);
         if (filter != null) {
             if (filter.isEmpty()) {
@@ -131,8 +137,8 @@ public class AutoNumberCtrl {
         System.out.println("filter2 " + filter);
         if (filter != null) {
             System.out.println("folf");
-            model.addAttribute("numbers", autoNumberService.filter(filter));
+            model.addAttribute("page", autoNumberService.filter(filter, pageable));
 
-        } else model.addAttribute("numbers", autoNumberService.findAllNumbers());
+        } else model.addAttribute("page", autoNumberService.findAllNumbers(pageable));
     }
 }

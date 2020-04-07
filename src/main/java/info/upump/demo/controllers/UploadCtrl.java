@@ -5,6 +5,9 @@ import info.upump.demo.model.ParserXLS;
 import info.upump.demo.service.AutoNumberService;
 import org.apache.poi.poifs.filesystem.OfficeXmlFileException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -30,7 +33,8 @@ public class UploadCtrl {
     @PostMapping("/upload")
     public String handleFileUpload(@RequestParam("file") MultipartFile file, RedirectAttributes
             redirectAttributes,
-                                   Model model) {
+                                   Model model,
+                                   @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         if (file == null || file.isEmpty()) {
             model.addAttribute("uploadMessage", "Файл невозможно обработать");
@@ -52,7 +56,7 @@ public class UploadCtrl {
             }
         }
 
-        model.addAttribute("numbers", autoNumberService.findAllNumbers());
+        model.addAttribute("numbers", autoNumberService.findAllNumbers(pageable));
 
         return "numbers";
     }
