@@ -1,11 +1,12 @@
 <#macro login path isRegistrForm>
-<div class="container h-100 mt-5">
-    <div class="row justify-content-center align-items-center">
+<div class="container mt-5">
+    <div class="row justify-content-center ">
     <form class="center" action="${path}" method="post">
         <div class="form-group ">
             <label>Логин</label>
             <input type="text" class="form-control" name="username"/>
         </div>
+
         <div class="form-group">
             <label>Пароль</label>
             <input class="form-control " type="password" name="password"/>

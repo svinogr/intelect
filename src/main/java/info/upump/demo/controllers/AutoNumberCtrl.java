@@ -88,7 +88,6 @@ public class AutoNumberCtrl {
         model.addAttribute("page", allNumbers);
         model.addAttribute("filter", filter);
 
-        System.out.println("filter " + filter);
         return "numberedit";
     }
 
