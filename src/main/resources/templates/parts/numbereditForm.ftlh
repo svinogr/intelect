@@ -1,10 +1,11 @@
 <#macro editForm path>
-
-
-
-    <div class="container h-100">
+${filter}
+    <div class="container">
         <div class="row justify-content-center align-items-center">
+
             <form class="center" action="${path}" method="post">
+
+
                 <div class="container">
                     <div class="row form-group">
                         <label>Номер</label>

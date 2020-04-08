@@ -1,9 +1,18 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/uploadFrom.ftlh" as u>
-<#import "parts/modal.ftlh" as m>
 <#import "parts/pager.ftlh" as p>
 <@c.page>
-    <@u.upload/>
+    <div class="mt-5">
+        <form action="/search" method="get">
+            <div class="row form-group ">
+                <div class="col col-md-4 pr-2">
+                    <label>Фильтр</label>
+                    <input type="text" class="form-control" value="<#if filter??>${filter}</#if>" name="filter"/>
+                </div>
+                <button class="btn btn-outline-primary align-self-end" type="submit">Найти</button>
+                <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+            </div>
+        </form>
+
         <@p.pager "" page />
 
         <table class="table table-sm table-borderless">

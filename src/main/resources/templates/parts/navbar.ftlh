@@ -15,6 +15,9 @@
                 <li class="nav-item">
                     <a class="nav-link <#if numberActive??>active</#if>" href="/numbers">Номера</a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link <#if searchActive??>active</#if>" href="/search">Поиск</a>
+                </li>
                 <#if isAdmin>
                 <li class="nav-item">
                     <a class="nav-link <#if userActive??>active</#if>" href="/users">Админ</a>
