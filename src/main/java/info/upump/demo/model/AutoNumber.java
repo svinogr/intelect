@@ -1,9 +1,6 @@
 package info.upump.demo.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 
 @Entity(name = "autonumber")
@@ -12,6 +9,7 @@ public class AutoNumber {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+   // @Column(unique = true)
     @NotBlank(message = "поле не должно быть пустым")
     private String number;
 

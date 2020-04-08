@@ -20,8 +20,8 @@ import javax.sql.DataSource;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
-    @Autowired
-    private DataSource dataSource;
+    //@Autowired
+  //  private DataSource dataSource;
 
     @Autowired
     private UserService userService;

@@ -38,7 +38,7 @@
                         <div class="row justify-content-end">
                             <div class="form-group ">
                                 <div class="col col-md-4 pr-2">
-                                    <form class="" method="post" action="/numbers/delete/${number.id}">
+                                    <form class="" method="post" action="/numbers/delete/${number.id}?page=${page.getNumber()}&size=${page.getSize()}">
                                         <input type="hidden" class="form-control" value="<#if filter??>${filter}</#if>"
                                                name="filter"/>
                                         <button class="btn btn-sm btn-outline-danger" type="submit">Удалить</button>
@@ -49,7 +49,7 @@
 
                             <div class="row form-group ">
                                 <div class="col col-md-4">
-                                    <form class="" method="post" action="/numbers/edit/${number.id}">
+                                    <form class="" method="post" action="/numbers/edit/${number.id}?page=${page.getNumber()}&size=${page.getSize()}">
                                         <input type="hidden" class="form-control" value="<#if filter??>${filter}</#if>"
                                                name="filter"/>
                                         <button class="btn btn-sm btn-outline-success" type="submit">Редактировать

@@ -7,7 +7,7 @@ import org.springframework.data.repository.CrudRepository;
 
 
 public interface AutoNumberRepo extends CrudRepository<AutoNumber, Long> {
-    Page<AutoNumber> findByNumberContainingOrDescriptionContaining(String number, String description, Pageable pageable);
+    Page<AutoNumber>findByNumberContainingOrDescriptionContaining(String number, String description, Pageable pageable);
 
     Page<AutoNumber> findAll(Pageable pageble);
 }

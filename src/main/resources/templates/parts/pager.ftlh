@@ -1,4 +1,7 @@
 <#macro pager url page >
+
+    ${page.getNumber()}
+    ${page.getSize()}
     <#if page.getTotalPages() gt 7>
         <#assign
 

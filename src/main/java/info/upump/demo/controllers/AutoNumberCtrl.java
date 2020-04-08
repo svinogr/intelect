@@ -3,6 +3,7 @@ package info.upump.demo.controllers;
 import info.upump.demo.model.AutoNumber;
 import info.upump.demo.service.AutoNumberService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
@@ -34,21 +35,26 @@ public class AutoNumberCtrl {
         System.out.println(filter);
         setFilterToModel(filter, model, pageable);
         // model.addAttribute("numbers", allNumbers);
-
+        System.out.println("pageM " + pageable.getPageNumber());
         return "numbers";
     }
 
     @PostMapping("/{filter}")
-    public String filter(@RequestParam String filter, RedirectAttributes redirectAttributes, Model model,
+    public String filter(@RequestParam String filter, Model model,
                          @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         if (filter == null || filter.isEmpty()) {
             return "redirect:/numbers";
         }
 
-        setFilterToModel(filter, model, pageable);
+        System.out.println("in filter ");
 
-        return "numbers";
+        setFilterToModel(filter, model, pageable);
+/*
+        return  String.format("redirect:/number/filter?page=%d&size=%d", pageable.getPageNumber(), pageable.getPageSize());
+*/
+        return "/numbers";
     }
+
 
     @PostMapping()
     public String saveNumber(
@@ -56,14 +62,18 @@ public class AutoNumberCtrl {
             @Valid AutoNumber autoNumber,
             BindingResult bindingResult,
             Model model,
+            @RequestParam("numberId") Long id,
             @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
 
         System.out.println(autoNumber.toString());
+        System.out.println("id " + id);
         System.out.println(filter);
-        if (autoNumber.getId() == null) {
-            autoNumber.setId((long) 0);
-        }
 
+        System.out.println("after edit "+ autoNumber.toString());
+
+        if (autoNumber.getId() == null) {
+            autoNumber.setId((id));
+        }
 
 
         if (bindingResult.hasErrors()) {
@@ -76,21 +86,26 @@ public class AutoNumberCtrl {
         } else {
             autoNumberService.addNumber(autoNumber);
         }
+        System.out.println("after edit "+ autoNumber.toString());
 
         setFilterToModel(filter, model, pageable);
+        model.addAttribute("page");
 
-        return "numbers";
+        System.out.println(String.format("redirect:/numbers?page=%d&size=%d", pageable.getPageNumber(), pageable.getPageSize()));
+
+        return String.format("redirect:/numbers?page=%d&size=%d", pageable.getPageNumber(), pageable.getPageSize());
     }
 
     @PostMapping("/edit/{autoNumber}")
     public String getNumber(
             @RequestParam(required = false) String filter,
             @PathVariable AutoNumber autoNumber,
-            Model model) {
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
         System.out.println("filter in edit " + filter);
-        System.out.println(autoNumber.toString());
+        System.out.println("befor edit "+ autoNumber.toString());
         model.addAttribute("number", autoNumber);
-        setFilterToModel(filter, model, null);
+        setFilterToModel(filter, model, pageable);
 
         return "numberedit";
     }
@@ -113,15 +128,19 @@ public class AutoNumberCtrl {
     public String deleteNumber(
             @RequestParam(required = false) String filter,
             @PathVariable AutoNumber autoNumber,
-            Model model) {
+            Model model,
+            RedirectAttributes attributes,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable) {
+
+        System.out.println("pageM " + pageable.getPageNumber());
 
         if (autoNumber != null) {
             autoNumberService.deleteNumber(autoNumber);
         }
 
-        setFilterToModel(filter, model, null);
+        setFilterToModel(filter, model, pageable);;
 
-        return "/numbers";
+        return String.format("redirect:/numbers?page=%d&size=%d", pageable.getPageNumber(), pageable.getPageSize());
     }
 
     private void setFilterToModel(String filter, Model model, Pageable pageable) {
@@ -139,6 +158,37 @@ public class AutoNumberCtrl {
             System.out.println("folf");
             model.addAttribute("page", autoNumberService.filter(filter, pageable));
 
-        } else model.addAttribute("page", autoNumberService.findAllNumbers(pageable));
+        }
+         else {
+            Page<AutoNumber> allNumbers = autoNumberService.findAllNumbers(pageable);
+            System.out.println("page " + allNumbers.getNumber());
+
+            model.addAttribute("page", autoNumberService.findAllNumbers(pageable));
+
+        }
+    }
+
+    private void setFilterToModel2(String filter, RedirectAttributes attributes, Pageable pageable) {
+        System.out.println("filter1 " + filter);
+        if (filter != null) {
+            if (filter.isEmpty()) {
+                filter = null;
+            }
+        }
+
+        attributes.addAttribute("filter", filter);
+
+        System.out.println("filter2 " + filter);
+        System.out.println(pageable.getPageNumber());
+        if (filter != null) {
+            System.out.println("folf");
+            attributes.addFlashAttribute("page", autoNumberService.filter(filter, pageable));
+
+        } else {
+
+            Page<AutoNumber> allNumbers = autoNumberService.findAllNumbers(pageable);
+            System.out.println("page " + allNumbers.getNumber());
+            attributes.addFlashAttribute("page", autoNumberService.findAllNumbers(pageable));
+        }
     }
 }

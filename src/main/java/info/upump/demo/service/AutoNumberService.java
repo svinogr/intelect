@@ -3,6 +3,7 @@ package info.upump.demo.service;
 import info.upump.demo.model.AutoNumber;
 import info.upump.demo.repo.AutoNumberRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -16,7 +17,7 @@ public class AutoNumberService {
         autoNumberRepo.save(autoNumber);
     }
 
-    public Iterable<AutoNumber> findAllNumbers(Pageable pageable) {
+    public Page<AutoNumber> findAllNumbers(Pageable pageable) {
         return autoNumberRepo.findAll(pageable);
     }
 
@@ -24,7 +25,7 @@ public class AutoNumberService {
         autoNumberRepo.delete(autoNumber);
     }
 
-    public Iterable<AutoNumber> filter(String filter, Pageable pageable) {
+    public Page<AutoNumber> filter(String filter, Pageable pageable) {
         String trim = filter.trim();
         return autoNumberRepo.findByNumberContainingOrDescriptionContaining(trim, trim, pageable);
     }
