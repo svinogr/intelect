@@ -21,8 +21,7 @@ public class ParserXLS {
         InputStream in = null;
         HSSFWorkbook wb = null;
         try {
-            in = new FileInputStream(convert(file));
-            wb = new HSSFWorkbook(in);
+            wb = new HSSFWorkbook(file.getInputStream());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -60,16 +59,6 @@ public class ParserXLS {
         }
 
         return autoNumbers;
-
-    }
-
-    public static File convert(MultipartFile file) throws IOException {
-        File convFile = new File(file.getOriginalFilename());
-        convFile.createNewFile();
-        FileOutputStream fos = new FileOutputStream(convFile);
-        fos.write(file.getBytes());
-        fos.close();
-        return convFile;
     }
 
 }

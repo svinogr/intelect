@@ -57,8 +57,7 @@ public class UploadCtrl {
         }
 
         model.addAttribute("page", autoNumberService.findAllNumbers(pageable));
-    //    redirectAttributes.addAttribute("page", autoNumberService.findAllNumbers(pageable));
 
-        return "redirect:/numbers";
+        return "/numbers";
     }
 }
