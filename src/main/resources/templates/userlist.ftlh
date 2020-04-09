@@ -2,7 +2,7 @@
 <@c.page>
     <div class="container">
         <div class="row justify-content-end">
-            <div class=""><a class="btn btn-outline-success" href="/registration">Добавить пользователя</a></div>
+            <div class=""><a class="btn btn-outline-success" href="users/add">Добавить пользователя</a></div>
         </div>
     </div>
 

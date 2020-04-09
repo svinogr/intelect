@@ -15,14 +15,16 @@
                         </div>
                         <div class="form-group col">
                             <label>Отчество</label>
-                            <input class="form-control <#if (error.patronymicError)??>is-invalid</#if>" type="text" name="patronymic" value="${user.patronymic}">
+                            <input class="form-control <#if (error.patronymicError)??>is-invalid</#if>" type="text"
+                                   name="patronymic" value="${user.patronymic}">
                             <#if (error.patronymicError)??>
                                 <div class="invalid-feedback col">${error.patronymicError}</div>
                             </#if>
                         </div>
                         <div class="form-group col">
                             <label>Фамилия</label>
-                            <input class="form-control <#if (error.surnameError)??>is-invalid</#if>" type="text" name="surname" value="${user.surname}">
+                            <input class="form-control <#if (error.surnameError)??>is-invalid</#if>" type="text"
+                                   name="surname" value="${user.surname}">
                             <#if (error.surnameError)??>
                                 <div class="invalid-feedback col">${error.surnameError}</div>
                             </#if>
@@ -34,21 +36,24 @@
                     <div class="row justify-content-center">
                         <div class="form-group col">
                             <label>Логин</label>
-                            <input class="form-control <#if (error.usernameError)??>is-invalid</#if>" type="text" name="username" value="${user.username}">
+                            <input class="form-control <#if (error.usernameError)??>is-invalid</#if>" type="text"
+                                   name="username" value="${user.username}">
                             <#if (error.usernameError)??>
                                 <div class="invalid-feedback col">${error.usernameError}</div>
                             </#if>
                         </div>
                         <div class="form-group col">
                             <label>Пароль</label>
-                            <input class="form-control <#if (error.passwordError)??>is-invalid</#if>" type="password" name="password" value="${user.password}">
+                            <input class="form-control <#if (error.passwordError)??>is-invalid</#if>" type="password"
+                                   name="password" value="${user.password}">
                             <#if (error.passwordError)??>
                                 <div class="invalid-feedback col">${error.passwordError}</div>
                             </#if>
                         </div>
                         <div class="form-group col">
                             <label>Пароль</label>
-                            <input class="form-control <#if (error.password2Error)??>is-invalid</#if>" type="password" name="password2" value="${user.password2}">
+                            <input class="form-control <#if (error.password2Error)??>is-invalid</#if>" type="password"
+                                   name="password2" value="${user.password2}">
                             <#if (error.password2Error)??>
                                 <div class="invalid-feedback col">${error.password2Error}</div>
                             </#if>
@@ -63,16 +68,22 @@
                 </div>
                 <div class="form-group col">
                     <label><input class="mr-1" type="checkbox"
-                                  name="ADMIN" <#if roles.ADMIN??>
-                            <#if roles.ADMIN = "checked"> checked
-                            </#if>
+                        <#list roles as role>
 
-                                </#if>>ADMIN
+                            <#if role = "ADMIN">
+                                checked
+
+                            </#if>
+                        </#list>
+
+
+                                  name="ADMIN">ADMIN
                     </label>
+
                 </div>
                 <div class="form-group col">
                     <input type="hidden" name="_csrf" value="${_csrf.token}">
-                    <input type="hidden" name="userId" value="${user.id}">
+                    <input type="hidden" name="id" value="${user.id}">
                     <button class="btn btn-outline-primary form-control mt-4" type="submit">Сохранить</button>
                 </div>
             </form>

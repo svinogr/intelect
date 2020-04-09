@@ -25,7 +25,8 @@ public class User implements UserDetails {
     private boolean active;
     @NotBlank(message = "поле не должно быть пустым")
     private String password;
-    @Transient
+
+    @NotBlank(message = "поле не должно быть пустым")
     private String password2;
 
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
@@ -65,7 +66,7 @@ public class User implements UserDetails {
     public boolean isAdmin() {
         return roles.contains(Role.ADMIN);
     }
-
+    @Transient
     public String getPassword2() {
         return password2;
     }
@@ -138,6 +139,7 @@ public class User implements UserDetails {
         this.roles = roles;
     }
 
+
     @Override
     public String toString() {
         return "User{" +
@@ -148,6 +150,7 @@ public class User implements UserDetails {
                 ", patronymic='" + patronymic + '\'' +
                 ", active=" + active +
                 ", password='" + password + '\'' +
+                ", password2='" + password2 + '\'' +
                 ", roles=" + roles +
                 '}';
     }

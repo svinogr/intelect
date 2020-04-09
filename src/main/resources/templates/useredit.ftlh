@@ -2,5 +2,5 @@
 <#import "parts/registrationForm.ftlh" as r>
 
 <@c.page>
-    <@r.registration "/users" />
+    <@r.registration "/users/save" />
 </@c.page>

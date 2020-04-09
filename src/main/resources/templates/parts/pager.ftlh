@@ -18,7 +18,7 @@
     </#if>
 
     <div class="mt-5">
-        <ul class="pagination">
+        <ul class="pagination pagination-sm">
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Страницы</a>
             </li>
@@ -51,7 +51,7 @@
         </ul>
     </div>
     <div class="mt-5">
-        <ul class="pagination">
+        <ul class="pagination pagination-sm">
             <li class="page-item disabled">
                 <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Кол-во номеров</a>
             </li>

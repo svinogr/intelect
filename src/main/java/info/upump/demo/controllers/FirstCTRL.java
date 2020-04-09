@@ -42,10 +42,11 @@ public class FirstCTRL {
         return "crud";
     }
 
-   // @Autowired
-    //UserService userService;
+    @Autowired
+    UserService userService;
+
     @GetMapping("/ad")
-    public String addAdmin( Model model) {
+    public String addAdmin(Model model) {
         User user = new User();
         user.setId((long) 0);
         user.setUsername("test");
@@ -53,13 +54,11 @@ public class FirstCTRL {
         user.setName("test");
         user.setPatronymic("test");
         user.setSurname("test");
+        user.setActive(true);
         user.setRoles(Arrays.stream(Role.values()).collect(Collectors.toSet()));
+        userService.save(user);
 
-        System.out.println(user);
-
-      ///  userService.save(user);
-
-        return "numbers";
+        return "crud";
     }
 
 }

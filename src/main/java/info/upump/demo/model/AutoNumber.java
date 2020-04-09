@@ -9,7 +9,6 @@ public class AutoNumber {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-   // @Column(unique = true)
     @NotBlank(message = "поле не должно быть пустым")
     private String number;
 
