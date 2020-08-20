@@ -95,7 +95,7 @@ public class UserCtrl {
 
         User byUsername = userService.findByUsername(user.getUsername());
 
-        if(byUsername != null) {
+        if(byUsername != null && user.getId() == 0) {
             errors.put("usernameError", "Пользователь с таким логином уже есть");
             bindingResult.addError(new ObjectError("username", "")); // чтобы сработало условие  наличие ошибки если ее нет
         }

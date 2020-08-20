@@ -10,9 +10,10 @@
 
         <script src="/webjars/jquery/3.4.1/jquery.slim.min.js"></script>
         <script src="/webjars/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        <script src="/webjars/popper.js"></script>
+       <#-- <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
                 integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
-                crossorigin="anonymous"></script>
+                crossorigin="anonymous"></script>-->
         <script src="/webjars/bootstrap/4.4.1-1/js/bootstrap.min.js"></script>
         <script type="text/javascript">
             $(document).ready(function () {
