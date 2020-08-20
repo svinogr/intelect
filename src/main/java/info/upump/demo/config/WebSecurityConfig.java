@@ -35,7 +35,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers( "/static/img/**", "/ad", "/webjars/**").permitAll()
+                .antMatchers( "/static/img/**", "/ad", "webjars/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -43,6 +43,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .permitAll()
                 .and()
                 .logout()
+                .logoutSuccessUrl("/")
                 .permitAll();
     }
 /* если использовать вручную команды СКЛ
