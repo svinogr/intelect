@@ -73,7 +73,7 @@ public class UserCtrl {
 
     @GetMapping("/delete/{user}")
     public String deleteNumber(@PathVariable User user, Model model) {
-        if (user != null){
+        if (user != null) {
             userService.deleteNumber(user);
         }
 
@@ -81,13 +81,13 @@ public class UserCtrl {
     }
 
     @PostMapping("save")
-    public String  saveOrUpdateUser(@Valid User user, BindingResult bindingResult, Model model,  @RequestParam Map<String, String> formWithRoles) {
+    public String saveOrUpdateUser(@Valid User user, BindingResult bindingResult, Model model, @RequestParam Map<String, String> formWithRoles) {
         Map<String, String> errors = ControlerUtils.getErrors(bindingResult);
 
-        if(user.getPassword() != null && !user.getPassword().equals(user.getPassword2())) {
+        if (user.getPassword() != null && !user.getPassword().equals(user.getPassword2())) {
             errors.put("password2Error", "пароли не совпадают");
 
-            if(!errors.containsKey("password2Error")) {
+            if (!errors.containsKey("password2Error")) {
                 errors.put("password2Error", "пароли не совпадают");
                 bindingResult.addError(new ObjectError("password2", "")); // чтобы сработало условие  наличие ошибки если ее нет
             }
@@ -95,16 +95,16 @@ public class UserCtrl {
 
         User byUsername = userService.findByUsername(user.getUsername());
 
-        if(byUsername != null && user.getId() == 0) {
+        if (byUsername != null && user.getId() == 0) {
             errors.put("usernameError", "Пользователь с таким логином уже есть");
             bindingResult.addError(new ObjectError("username", "")); // чтобы сработало условие  наличие ошибки если ее нет
         }
 
 
-        if (formWithRoles.containsKey("ADMIN")){
+        if (formWithRoles.containsKey("ADMIN")) {
             user.setRoles(Arrays.stream(Role.values()).collect(Collectors.toSet()));
         } else {
-            user.setRoles(Arrays.stream(new Role[]{ Role.USER}).collect(Collectors.toSet()));
+            user.setRoles(Arrays.stream(new Role[]{Role.USER}).collect(Collectors.toSet()));
         }
 
 
@@ -122,8 +122,9 @@ public class UserCtrl {
 
             return "/useredit";
 
-        }else {
+        } else {
             System.out.println("user --------- " + user);
+            user.setActive(true);
             userService.save(user);
 
             return "redirect:/users";
